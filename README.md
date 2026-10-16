@@ -3,7 +3,7 @@
 Website for Beldangi Fax Machine LC, an independent game studio in Vermont making
 **Toadstool**.
 
-Live: https://bahun-ko-ckusi.github.io/BELDANGIFAXMACHINE/
+Live: https://beldangifaxmachine.com (custom domain, `CNAME` file)
 
 ## Pages
 
