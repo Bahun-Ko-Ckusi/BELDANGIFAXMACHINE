@@ -253,7 +253,7 @@ def game_page(title, h1, body):
             <a href="terms.html">Terms</a>
             <a href="privacy.html">Privacy</a>
         </nav>
-        <p class="fine">&copy; 2026 Beldangi Fax Machine LC. Toadstool is for adults 18+.</p>
+        <p class="fine">&copy; 2026 <a href="http://beldangifaxmachine.com">Beldangi Fax Machine LC</a>. Toadstool is for adults 18+.</p>
     </footer>
 
 </body>
