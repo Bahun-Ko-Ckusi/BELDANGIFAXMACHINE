@@ -340,3 +340,73 @@ a:hover { color: var(--register); }
   body { background: #fff; background-image: none; }
   .btn { border: 1px solid #000; }
 }
+
+/* ── page 2 : the studio's own game ─────────────────────────────────── */
+
+.game-grid {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: start;
+}
+@media (min-width: 60rem) {
+  .game-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+}
+
+.game-eyebrow {
+  font: 500 .8125rem/1.5 var(--mono);
+  color: var(--register);
+  margin: 0 0 .75rem;
+}
+
+.game-title {
+  font: 800 clamp(2.5rem, 7.5vw, 5rem)/.92 var(--sans);
+  letter-spacing: -.035em;
+  margin: 0 0 1rem;
+  text-shadow: .035em .03em 0 rgba(200, 21, 107, .42);
+}
+
+.game-lede {
+  font-size: 1.2em;
+  line-height: 1.5;
+  max-width: 40ch;
+  margin: 0 0 1rem;
+}
+.game-body { max-width: 46ch; margin: 0 0 1.75rem; }
+
+.fields--game { margin-bottom: 1.75rem; max-width: 40rem; }
+.fields--game .field { grid-template-columns: 7.5rem 1fr; }
+
+/* a photo that came over the line: ruled frame, colour inside, frog breaking out */
+.game-art {
+  position: relative;
+  margin: 0;
+  padding-top: clamp(2rem, 6vw, 4.5rem);
+}
+.game-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--toner);
+  box-shadow: .5rem .5rem 0 var(--paper-deep);
+}
+.game-char {
+  position: absolute;
+  top: 0;
+  right: clamp(-1rem, -2vw, -2.5rem);
+  width: clamp(7rem, 24%, 11rem);
+  height: auto;
+  filter: drop-shadow(.2rem .25rem 0 rgba(0, 0, 0, .25));
+  pointer-events: none;
+}
+.game-art figcaption {
+  font: 400 .8125rem/1.5 var(--mono);
+  color: var(--smudge);
+  margin-top: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .game-shot { border-color: var(--toner); }
+  :root:not([data-theme="light"]) .game-char {
+    filter: drop-shadow(.2rem .25rem 0 rgba(0, 0, 0, .6));
+  }
+}
