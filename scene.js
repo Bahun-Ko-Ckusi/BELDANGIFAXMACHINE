@@ -1,22 +1,19 @@
-/* The desk in the hero: three objects you can turn and poke.
-   Everything here is built from primitives — no model files to download. */
+/* The desk at the top of the page: three things you can turn and poke.
+   Built from primitives, so there are no model files to download. */
 
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js";
 
 const canvas = document.getElementById("scene");
-const hint = document.getElementById("hint");
 const picks = [...document.querySelectorAll(".pick")];
 const readouts = [...document.querySelectorAll(".readout")];
 const fallback = document.querySelector(".stage-fallback");
-
 const calm = matchMedia("(prefers-reduced-motion: reduce)");
-const night = matchMedia("(prefers-color-scheme: dark)");
 
 function giveUp(why) {
-  if (why) console.warn("3D hero off:", why);
+  if (why) console.warn("3D desk off:", why);
   canvas.remove();
-  if (hint) hint.remove();
   if (fallback) fallback.hidden = false;
+  document.querySelector(".desk-bar")?.remove();
 }
 
 let renderer;
@@ -29,61 +26,41 @@ try {
 function boot() {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 1.1;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 80);
-  camera.position.set(0, 2.75, 7.6);
-  camera.lookAt(0, 0.85, 0);
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 80);
+  const aim = new THREE.Vector3();
 
-  /* ── palette, in step with the page ───────────────────────────────── */
+  const BEIGE = 0xd3cab4, SLATE = 0x2a3032, INK = 0x0a0c0d, PAPER = 0xf3efe4;
+  const CAP = 0xb4502c, GLOW = 0x2fd39a;
 
-  const skin = {
-    day:   { deck: 0xe6eae8, rim: 0xffffff, sky: 0xffffff, ground: 0x97a3a0, key: 2.1, fill: 0.5 },
-    night: { deck: 0x1d2322, rim: 0x2b3331, sky: 0x9fb2c9, ground: 0x101414, key: 1.7, fill: 0.7 }
-  };
-  const BLUE = 0x1038b5, HOT = 0xc8156b, SHELL = 0x1a1d1d, PAPER = 0xf4f6f5;
+  /* ── light: one warm desk lamp, a cool bounce, and the screen ─────── */
 
-  /* ── light ────────────────────────────────────────────────────────── */
+  scene.add(new THREE.HemisphereLight(0x8d9aa3, 0x0b0e0f, 0.6));
 
-  const hemi = new THREE.HemisphereLight(0xffffff, 0x97a3a0, 0.55);
-  scene.add(hemi);
+  const lamp = new THREE.DirectionalLight(0xffe8cc, 2.6);
+  lamp.position.set(2.6, 6.5, 3.8);
+  lamp.castShadow = true;
+  lamp.shadow.mapSize.set(1024, 1024);
+  lamp.shadow.camera.near = 1;
+  lamp.shadow.camera.far = 20;
+  lamp.shadow.camera.left = lamp.shadow.camera.bottom = -6;
+  lamp.shadow.camera.right = lamp.shadow.camera.top = 6;
+  lamp.shadow.bias = -0.0008;
+  lamp.shadow.radius = 4;
+  scene.add(lamp);
 
-  const key = new THREE.DirectionalLight(0xffffff, 2.1);
-  key.position.set(3.4, 6.2, 4.2);
-  key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
-  key.shadow.camera.near = 1;
-  key.shadow.camera.far = 20;
-  key.shadow.camera.left = key.shadow.camera.bottom = -6;
-  key.shadow.camera.right = key.shadow.camera.top = 6;
-  key.shadow.bias = -0.0008;
-  key.shadow.radius = 3;
-  scene.add(key);
-
-  const fill = new THREE.DirectionalLight(0xdfe8ff, 0.5);
-  fill.position.set(-4.5, 2.5, -2);
-  scene.add(fill);
+  const bounce = new THREE.DirectionalLight(0x9fb8d6, 0.55);
+  bounce.position.set(-5, 2.5, -1);
+  scene.add(bounce);
 
   /* ── the desk ─────────────────────────────────────────────────────── */
 
   const desk = new THREE.Group();
-  desk.position.y = -0.55;
   scene.add(desk);
-
-  const deckMat = new THREE.MeshStandardMaterial({ color: skin.day.deck, roughness: 0.78, metalness: 0 });
-  const deck = new THREE.Mesh(new THREE.CylinderGeometry(3.5, 3.5, 0.34, 72), deckMat);
-  deck.position.y = -0.17;
-  deck.receiveShadow = true;
-  desk.add(deck);
-
-  const rimMat = new THREE.MeshStandardMaterial({ color: skin.day.rim, roughness: 0.5 });
-  const rim = new THREE.Mesh(new THREE.TorusGeometry(3.5, 0.045, 10, 80), rimMat);
-  rim.rotation.x = Math.PI / 2;
-  rim.position.y = 0.002;
-  desk.add(rim);
 
   const mat = (color, rough = 0.5, extra = {}) =>
     new THREE.MeshStandardMaterial({ color, roughness: rough, metalness: 0, ...extra });
@@ -96,6 +73,12 @@ function boot() {
     return m;
   };
 
+  const top = solid(new THREE.CylinderGeometry(3.6, 3.6, 0.28, 80), mat(0x2d3435, 0.8), 0, -0.14, 0);
+  desk.add(top);
+  const edge = new THREE.Mesh(new THREE.CylinderGeometry(3.62, 3.5, 0.5, 80, 1, true), mat(0x161a1b, 0.9));
+  edge.position.y = -0.53;
+  desk.add(edge);
+
   const items = {};
   function place(key, group, x, z) {
     group.position.set(x, 0, z);
@@ -105,109 +88,124 @@ function boot() {
     desk.add(group);
   }
 
-  /* 1. the fax machine the company is named after */
+  /* 1. a beige office fax, the thing the company is named after */
   const fax = new THREE.Group();
   {
-    const shell = mat(SHELL, 0.42);
-    const body = solid(new THREE.BoxGeometry(1.7, 0.52, 1.15), shell, 0, 0.26, 0);
-    const lip = solid(new THREE.BoxGeometry(1.74, 0.07, 1.19), mat(0x2c3130, 0.35), 0, 0.53, 0);
-    const tray = solid(new THREE.BoxGeometry(1.5, 0.06, 0.78), mat(0x232827, 0.4), 0, 0.72, -0.26);
-    tray.rotation.x = -0.34;
-    const slot = solid(new THREE.BoxGeometry(1.25, 0.05, 0.12), mat(0x07090a, 0.9), 0, 0.5, 0.42);
-    const roll = solid(new THREE.CylinderGeometry(0.17, 0.17, 1.3, 24), mat(PAPER, 0.85), 0, 0.82, -0.5);
+    const shell = mat(BEIGE, 0.55);
+    fax.add(
+      solid(new THREE.BoxGeometry(1.7, 0.5, 1.15), shell, 0, 0.25, 0),
+      solid(new THREE.BoxGeometry(1.74, 0.06, 1.19), mat(0xc2b9a2, 0.5), 0, 0.5, 0)
+    );
+    const tray = solid(new THREE.BoxGeometry(1.46, 0.05, 0.74), mat(SLATE, 0.5), 0, 0.7, -0.27);
+    tray.rotation.x = -0.36;
+    const roll = solid(new THREE.CylinderGeometry(0.16, 0.16, 1.28, 28), mat(PAPER, 0.85), 0, 0.8, -0.5);
     roll.rotation.z = Math.PI / 2;
-
-    const sheet = solid(new THREE.BoxGeometry(1.1, 0.012, 0.82), mat(PAPER, 0.95), 0, 0.5, 0.45);
-    sheet.visible = false;
-    // a line of blue toner, so you can see the page is printed on
-    const strip = solid(new THREE.BoxGeometry(0.62, 0.014, 0.05), mat(BLUE, 0.6), -0.12, 0.013, -0.06);
-    sheet.add(strip);
-
-    fax.add(body, lip, tray, slot, roll, sheet);
-    for (let i = 0; i < 3; i++) {
-      const b = solid(new THREE.SphereGeometry(0.055, 18, 14), mat(i === 0 ? HOT : 0x8d9796, 0.35), -0.5 + i * 0.17, 0.57, 0.14);
-      fax.add(b);
+    const slot = solid(new THREE.BoxGeometry(1.22, 0.05, 0.1), mat(INK, 0.9), 0, 0.48, 0.42);
+    const panel = solid(new THREE.BoxGeometry(0.62, 0.03, 0.34), mat(SLATE, 0.4), 0.42, 0.53, 0.12);
+    const lcd = solid(new THREE.BoxGeometry(0.42, 0.012, 0.1), mat(0x6f8a5a, 0.3, { emissive: 0x5f7d48, emissiveIntensity: 0.35 }), 0.42, 0.548, 0.02);
+    fax.add(tray, roll, slot, panel, lcd);
+    for (let i = 0; i < 6; i++) {
+      const k = solid(new THREE.BoxGeometry(0.075, 0.03, 0.06), mat(i === 5 ? CAP : 0xe9e3d3, 0.45),
+        0.25 + (i % 3) * 0.11, 0.555, 0.15 + Math.floor(i / 3) * 0.09);
+      fax.add(k);
     }
-    const dial = solid(new THREE.TorusGeometry(0.13, 0.035, 10, 28), mat(BLUE, 0.4), 0.5, 0.57, 0.1);
-    dial.rotation.x = Math.PI / 2;
-    fax.add(dial);
+    const sheet = solid(new THREE.BoxGeometry(1.08, 0.012, 0.86), mat(PAPER, 0.95), 0, 0.48, 0.44);
+    sheet.visible = false;
+    for (let r = 0; r < 4; r++) {
+      sheet.add(solid(new THREE.BoxGeometry(r === 0 ? 0.55 : 0.8 - r * 0.12, 0.014, 0.035), mat(0x2b2b2b, 0.9),
+        -0.1 - (r === 0 ? 0.04 : 0), 0.007, -0.24 + r * 0.12));
+    }
+    fax.add(sheet);
     fax.userData.sheet = sheet;
     fax.userData.send = -1;
   }
-  place("fax", fax, -1.95, 0.25);
+  place("fax", fax, -1.9, 0.35);
+  fax.rotation.y = 0.28;
 
-  /* 2. a petri dish that fruits when you poke it */
+  /* 2. a petri dish that fruits when poked */
   const dish = new THREE.Group();
   {
     const glass = new THREE.MeshPhysicalMaterial({
-      color: 0xffffff, roughness: 0.08, metalness: 0,
-      transparent: true, opacity: 0.3, transmission: 0.75, thickness: 0.4
+      color: 0xffffff, roughness: 0.06, metalness: 0,
+      transparent: true, opacity: 0.22, transmission: 0.8, thickness: 0.4
     });
-    const base = solid(new THREE.CylinderGeometry(0.92, 0.9, 0.12, 48), mat(0xd9dedc, 0.5), 0, 0.06, 0);
-    const agar = solid(new THREE.CylinderGeometry(0.84, 0.84, 0.11, 48), mat(0xe8dfb8, 0.55), 0, 0.14, 0);
-    const wall = new THREE.Mesh(new THREE.CylinderGeometry(0.94, 0.94, 0.3, 48, 1, true), glass);
-    wall.position.y = 0.22;
-    dish.add(base, agar, wall);
+    dish.add(
+      solid(new THREE.CylinderGeometry(0.94, 0.92, 0.1, 56), mat(0xcfd6d4, 0.35), 0, 0.05, 0),
+      solid(new THREE.CylinderGeometry(0.86, 0.86, 0.1, 56), mat(0xe2d29a, 0.6), 0, 0.13, 0)
+    );
+    // mycelium spreading across the agar
+    const myc = solid(new THREE.CircleGeometry(0.55, 40), mat(0xf6f3ea, 0.95), 0, 0.182, 0);
+    myc.rotation.x = -Math.PI / 2;
+    dish.add(myc);
+    const wall = new THREE.Mesh(new THREE.CylinderGeometry(0.96, 0.96, 0.28, 56, 1, true), glass);
+    wall.position.y = 0.2;
+    dish.add(wall);
 
     const caps = [];
-    const spots = [[0, 0, 0.42], [-0.35, 0.22, 0.3], [0.33, -0.26, 0.26]];
-    spots.forEach(([x, z, h]) => {
-      const shroom = new THREE.Group();
-      const stem = solid(new THREE.CylinderGeometry(0.045, 0.07, h, 16), mat(0xf0ead8, 0.72), 0, h / 2, 0);
-      const cap = solid(new THREE.SphereGeometry(0.17, 24, 16, 0, Math.PI * 2, 0, Math.PI / 1.85), mat(0xb0472a, 0.62), 0, h, 0);
-      cap.scale.set(1, 0.62, 1);
-      shroom.add(stem, cap);
-      shroom.position.set(x, 0.19, z);
-      shroom.scale.setScalar(0.001);
-      dish.add(shroom);
-      caps.push(shroom);
-    });
+    [[0.02, 0.0, 0.46, 1], [-0.36, 0.2, 0.32, 0.8], [0.32, -0.25, 0.27, 0.7], [0.18, 0.36, 0.2, 0.55]]
+      .forEach(([x, z, h, s]) => {
+        const shroom = new THREE.Group();
+        shroom.add(solid(new THREE.CylinderGeometry(0.045, 0.07, h, 16), mat(0xf1ebdc, 0.75), 0, h / 2, 0));
+        const cap = solid(new THREE.SphereGeometry(0.18, 28, 16, 0, Math.PI * 2, 0, Math.PI / 1.9), mat(CAP, 0.6), 0, h - 0.01, 0);
+        cap.scale.set(1, 0.6, 1);
+        const gills = solid(new THREE.CircleGeometry(0.175, 28), mat(0xd9c8a8, 0.9), 0, h - 0.012, 0);
+        gills.rotation.x = Math.PI / 2;
+        shroom.add(cap, gills);
+        shroom.position.set(x, 0.18, z);
+        shroom.rotation.z = (x) * 0.25;
+        shroom.userData.size = s;
+        shroom.scale.setScalar(0.001);
+        dish.add(shroom);
+        caps.push(shroom);
+      });
     dish.userData.caps = caps;
     dish.userData.grow = -1;
   }
-  place("dish", dish, -0.1, 0.9);
+  place("dish", dish, -0.05, 1.05);
 
   /* 3. the screen the game is made on */
   const rig = new THREE.Group();
   {
-    const stand = solid(new THREE.CylinderGeometry(0.34, 0.42, 0.07, 32), mat(0x2c3130, 0.45), 0, 0.035, 0);
-    const neck = solid(new THREE.CylinderGeometry(0.075, 0.085, 0.5, 20), mat(0x2c3130, 0.45), 0, 0.3, 0);
-    const back = solid(new THREE.BoxGeometry(1.8, 1.12, 0.1), mat(SHELL, 0.45), 0, 1.12, -0.02);
-    const screen = solid(new THREE.BoxGeometry(1.66, 0.98, 0.03), mat(0x0a1a16, 0.25, {
-      emissive: 0x16c08a, emissiveIntensity: 0.45
-    }), 0, 1.12, 0.045);
-    const bar = solid(new THREE.BoxGeometry(1.5, 0.07, 0.01), mat(0x16c08a, 0.3, {
-      emissive: 0x16c08a, emissiveIntensity: 1.6
-    }), 0, 1.12, 0.07);
-    bar.castShadow = false;
-    rig.add(stand, neck, back, screen, bar);
-    rig.rotation.y = -0.22;
+    rig.add(
+      solid(new THREE.BoxGeometry(0.7, 0.05, 0.45), mat(SLATE, 0.5), 0, 0.025, 0.05),
+      solid(new THREE.BoxGeometry(0.12, 0.62, 0.08), mat(SLATE, 0.5), 0, 0.33, -0.08),
+      solid(new THREE.BoxGeometry(1.86, 1.14, 0.09), mat(0x1c2123, 0.45), 0, 1.15, -0.05)
+    );
+    const screen = solid(new THREE.BoxGeometry(1.72, 1.0, 0.02), mat(0x050b0a, 0.7, {
+      emissive: GLOW, emissiveIntensity: 0.08
+    }), 0, 1.15, 0.005);
+    rig.add(screen);
+    // a few lines of "code" on the screen
+    const codeMat = mat(0x8debc4, 0.6, { emissive: 0x8debc4, emissiveIntensity: 0.75 });
+    [[0.9, 0], [0.6, 0.15], [0.75, 0.15], [0.4, 0.3], [0.85, 0.15], [0.5, 0]].forEach(([w, indent], i) => {
+      const ln = new THREE.Mesh(new THREE.BoxGeometry(w, 0.04, 0.005), codeMat);
+      ln.position.set(-0.7 + indent + w / 2, 1.52 - i * 0.13, 0.02);
+      rig.add(ln);
+    });
+    const bar = new THREE.Mesh(new THREE.BoxGeometry(1.64, 0.05, 0.005),
+      mat(GLOW, 0.3, { emissive: GLOW, emissiveIntensity: 2 }));
+    bar.position.set(0, 1.6, 0.024);
+    bar.visible = false;
+    rig.add(bar);
+
+    const spill = new THREE.PointLight(GLOW, 0.9, 3.6, 1.8);
+    spill.position.set(0, 0.55, 0.9);   // low and forward: lights the desk, not the glass
+    rig.add(spill);
+
+    rig.rotation.y = -0.3;
     rig.userData.screen = screen;
     rig.userData.bar = bar;
+    rig.userData.spill = spill;
     rig.userData.boot = -1;
   }
-  place("rig", rig, 1.9, -0.1);
-
-  /* ── skin swap for light / dark ───────────────────────────────────── */
-
-  function dress() {
-    const s = night.matches ? skin.night : skin.day;
-    deckMat.color.setHex(s.deck);
-    rimMat.color.setHex(s.rim);
-    hemi.color.setHex(s.sky);
-    hemi.groundColor.setHex(s.ground);
-    key.intensity = s.key;
-    fill.intensity = s.fill;
-  }
-  dress();
-  night.addEventListener("change", dress);
+  place("rig", rig, 1.85, -0.2);
 
   /* ── picking and turning ──────────────────────────────────────────── */
 
   const ray = new THREE.Raycaster();
   const ptr = new THREE.Vector2();
-  let hovered = null, selected = "fax";
-  let spin = 0, spinTo = 0, tilt = 0, drag = null, moved = 0;
+  let hovered = null, selected = null;
+  let spin = -0.12, spinTo = -0.12, tilt = 0, tiltTo = 0, drag = null, moved = 0, idle = 0;
 
   function hit(ev) {
     const r = canvas.getBoundingClientRect();
@@ -215,8 +213,7 @@ function boot() {
     ptr.y = -((ev.clientY - r.top) / r.height) * 2 + 1;
     ray.setFromCamera(ptr, camera);
     const found = ray.intersectObjects(Object.values(items), true)[0];
-    if (!found) return null;
-    let o = found.object;
+    let o = found && found.object;
     while (o && !o.userData.key) o = o.parent;
     return o ? o.userData.key : null;
   }
@@ -228,8 +225,8 @@ function boot() {
       b.classList.toggle("is-on", on);
       b.setAttribute("aria-pressed", String(on));
     });
-    readouts.forEach(p => p.classList.toggle("is-on", p.dataset.item === key));
-    if (poke) play(key);
+    readouts.forEach(p => p.classList.toggle("is-on", p.dataset.item === (key || "")));
+    if (poke && key) play(key);
   }
 
   function play(key) {
@@ -237,11 +234,13 @@ function boot() {
     if (key === "fax") { it.userData.send = 0; it.userData.sheet.visible = true; }
     if (key === "dish") { it.userData.grow = 0; it.userData.caps.forEach(c => c.scale.setScalar(0.001)); }
     if (key === "rig") it.userData.boot = 0;
-    spinTo = -it.position.x * 0.12;
+    // swing the desk a little so the poked thing faces you
+    spinTo = Math.max(-0.7, Math.min(0.7, -it.position.x * 0.16));
+    idle = 0;
   }
 
   canvas.addEventListener("pointerdown", ev => {
-    drag = { x: ev.clientX, y: ev.clientY, spin, tilt };
+    drag = { x: ev.clientX, y: ev.clientY, spin: spinTo, tilt: tiltTo };
     moved = 0;
     canvas.classList.add("is-grabbing");
     canvas.setPointerCapture(ev.pointerId);
@@ -251,14 +250,13 @@ function boot() {
     if (drag) {
       const dx = ev.clientX - drag.x, dy = ev.clientY - drag.y;
       moved = Math.max(moved, Math.hypot(dx, dy));
-      spinTo = drag.spin + dx * 0.006;
-      spinTo = Math.max(-0.72, Math.min(0.72, spinTo));
-      tilt = Math.max(-0.07, Math.min(0.16, drag.tilt + dy * 0.0022));
+      spinTo = Math.max(-0.8, Math.min(0.8, drag.spin + dx * 0.006));
+      tiltTo = Math.max(-0.06, Math.min(0.14, drag.tilt + dy * 0.002));
+      idle = 0;
       return;
     }
-    const k = hit(ev);
-    hovered = k;
-    canvas.classList.toggle("is-over", !!k);
+    hovered = hit(ev);
+    canvas.classList.toggle("is-over", !!hovered);
   });
 
   function letGo(ev) {
@@ -277,15 +275,36 @@ function boot() {
 
   picks.forEach(b => b.addEventListener("click", () => show(b.dataset.item, true)));
 
-  /* ── frame loop ───────────────────────────────────────────────────── */
+  /* ── framing: desk to the right of the headline on wide layouts,
+        centred and fitted to the width on phones ───────────────────── */
+
+  const overlay = matchMedia("(min-width: 62rem)");
+  const HALF_FOV = THREE.MathUtils.degToRad(15);   // half of the 30° vertical fov
 
   function size() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
     if (!w || !h) return;
     renderer.setSize(w, h, false);
-    camera.aspect = w / h;
+    const a = w / h;
+    camera.aspect = a;
+    const tanH = Math.tan(HALF_FOV) * a;           // horizontal half-angle
+
+    if (overlay.matches) {
+      // slide the camera sideways (no yaw) so the desk centre lands 73% across
+      const d = 11.2;
+      const shift = (2 * 0.73 - 1) * d * tanH;
+      camera.position.set(-shift, d * 0.34, d);
+      aim.set(-shift, 0.35, 0);
+    } else {
+      // back off until the three objects fit the width, with a little air
+      const d = Math.max(8.8, 3.25 / tanH);
+      camera.position.set(0, d * 0.36, d);
+      aim.set(0, 0.45, 0);
+    }
+    camera.lookAt(aim);
     camera.updateProjectionMatrix();
   }
+  overlay.addEventListener("change", size);
   new ResizeObserver(size).observe(canvas);
   size();
 
@@ -298,58 +317,61 @@ function boot() {
   renderer.setAnimationLoop(() => {
     if (!live) return;
     try {
-    // getDelta() advances the clock, so read it first and take t from the clock after
-    const dt = Math.min(clock.getDelta(), 0.05);
-    const t = clock.elapsedTime;
+      // getDelta() advances the clock, so read it before elapsedTime
+      const dt = Math.min(clock.getDelta(), 0.05);
+      const t = clock.elapsedTime;
 
-    if (!drag && !calm.matches) spinTo += Math.sin(t * 0.22) * 0.0006;
-    spin += (spinTo - spin) * 0.08;
-    desk.rotation.y = spin;
-    desk.rotation.x += (tilt - desk.rotation.x) * 0.08;
+      idle += dt;
+      if (!drag && !calm.matches && idle > 4) spinTo += Math.sin(t * 0.2) * 0.0005;
+      spin += (spinTo - spin) * 0.08;
+      tilt += (tiltTo - tilt) * 0.08;
+      desk.rotation.y = spin;
+      desk.rotation.x = tilt;
 
-    for (const k in items) {
-      const it = items[k];
-      const want = (hovered === k ? 0.14 : 0) + (selected === k ? 0.06 : 0);
-      it.userData.rest += (want - it.userData.rest) * 0.12;
-      const bob = calm.matches ? 0 : Math.sin(t * 1.1 + it.position.x) * 0.012;
-      it.position.y = it.userData.rest + bob;
-    }
+      for (const k in items) {
+        const it = items[k];
+        const want = (hovered === k ? 0.12 : 0) + (selected === k ? 0.05 : 0);
+        it.userData.rest += (want - it.userData.rest) * 0.14;
+        it.position.y = it.userData.rest;
+      }
 
-    /* the fax prints a sheet */
-    if (fax.userData.send >= 0) {
-      fax.userData.send = Math.min(1, fax.userData.send + dt * 0.75);
-      const p = easeOut(fax.userData.send);
-      fax.userData.sheet.position.z = 0.45 + p * 0.95;
-      fax.userData.sheet.position.y = 0.5 - p * 0.06;
-      fax.userData.sheet.rotation.x = p * 0.16;
-      if (fax.userData.send === 1) fax.userData.send = -1;
-    }
+      // the fax prints a sheet
+      const f = fax.userData;
+      if (f.send >= 0) {
+        f.send = Math.min(1, f.send + dt * 0.7);
+        const p = easeOut(f.send);
+        f.sheet.position.z = 0.44 + p * 1.0;
+        f.sheet.position.y = 0.48 - p * 0.07;
+        f.sheet.rotation.x = p * 0.18;
+        if (f.send === 1) f.send = -1;
+      }
 
-    /* the dish fruits */
-    if (dish.userData.grow >= 0) {
-      dish.userData.grow = Math.min(1, dish.userData.grow + dt * 0.5);
-      dish.userData.caps.forEach((c, i) => {
-        const p = Math.max(0, Math.min(1, (dish.userData.grow - i * 0.18) / 0.6));
-        c.scale.setScalar(Math.max(0.001, easeOut(p)));
-      });
-      if (dish.userData.grow === 1) dish.userData.grow = -1;
-    }
+      // the dish fruits, one mushroom after another
+      const d = dish.userData;
+      if (d.grow >= 0) {
+        d.grow = Math.min(1, d.grow + dt * 0.45);
+        d.caps.forEach((c, i) => {
+          const p = Math.max(0, Math.min(1, (d.grow - i * 0.14) / 0.55));
+          c.scale.setScalar(Math.max(0.001, easeOut(p) * c.userData.size));
+        });
+        if (d.grow === 1) d.grow = -1;
+      }
 
-    /* the screen boots */
-    const scan = rig.userData.bar;
-    if (rig.userData.boot >= 0) {
-      rig.userData.boot = Math.min(1, rig.userData.boot + dt * 0.6);
-      const p = rig.userData.boot;
-      scan.visible = true;
-      scan.position.y = 1.6 - p * 0.95;
-      rig.userData.screen.material.emissiveIntensity = 0.45 + Math.sin(p * Math.PI) * 0.75;
-      if (p === 1) { rig.userData.boot = -1; scan.visible = false; rig.userData.screen.material.emissiveIntensity = 0.45; }
-    } else if (!calm.matches) {
-      rig.userData.screen.material.emissiveIntensity = 0.42 + Math.sin(t * 1.6) * 0.05;
-      scan.visible = false;
-    } else {
-      scan.visible = false;
-    }
+      // the screen wakes up
+      const r = rig.userData;
+      if (r.boot >= 0) {
+        r.boot = Math.min(1, r.boot + dt * 0.65);
+        r.bar.visible = true;
+        r.bar.position.y = 1.62 - r.boot * 0.95;
+        const surge = Math.sin(r.boot * Math.PI);
+        r.screen.material.emissiveIntensity = 0.08 + surge * 0.5;
+        r.spill.intensity = 0.9 + surge * 2.2;
+        if (r.boot === 1) { r.boot = -1; r.bar.visible = false; }
+      } else {
+        const hum = calm.matches ? 0 : Math.sin(t * 1.4) * 0.04;
+        r.screen.material.emissiveIntensity = 0.08 + hum * 0.4;
+        r.spill.intensity = 0.9 + hum * 3;
+      }
 
       renderer.render(scene, camera);
     } catch (e) {
@@ -358,7 +380,7 @@ function boot() {
     }
   });
 
-  show("fax", false);
+  show(null, false);
 }
 
 if (renderer) {
