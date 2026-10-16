@@ -4,7 +4,7 @@ import pathlib, sys
 
 UPDATED = "October 16, 2026"
 MAIL = '<a href="mailto:beldangifaxmachine@gmail.com">beldangifaxmachine@gmail.com</a>'
-GAME_SITE = "https://bahun-ko-ckusi.github.io/TOADSTOOLLINK/"
+GAME_SITE = "https://bahun-ko-ckusi.github.io/toadstoolweblink/"
 CO_SITE = "https://beldangifaxmachine.com/"
 
 TERMS = f"""
@@ -215,7 +215,7 @@ def indent(html, n):
     pad = " " * n
     return "\n".join((pad + l) if l.strip() else l for l in html.strip("\n").splitlines())
 
-# ── game site (TOADSTOOLLINK): keep its own chrome ─────────────────────
+# ── game site (toadstoolweblink): keep its own chrome ─────────────────────
 def game_page(title, h1, body):
     return f"""<!DOCTYPE html>
 <html lang="en">

@@ -28,7 +28,7 @@ from one script, so the two never say different things. Edit the text in
 `tools/build_legal.py`, then run it from your home folder:
 
 ```
-python3 BELDANGIFAXMACHINE/tools/build_legal.py TOADSTOOLLINK BELDANGIFAXMACHINE
+python3 BELDANGIFAXMACHINE/tools/build_legal.py toadstoolweblink BELDANGIFAXMACHINE
 ```
 
 and commit both repos. Update `UPDATED` at the top of the script whenever the text changes.
