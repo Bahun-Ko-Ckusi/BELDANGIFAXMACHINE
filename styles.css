@@ -239,3 +239,11 @@ a:hover { color: var(--accent); }
 }
 .close:hover { border-color: var(--accent); color: var(--accent); }
 .viewer-media img, .viewer-media video { display: block; width: 100%; height: auto; max-height: 82vh; object-fit: contain; background: #000; }
+
+/* ── age + content notices ─────────────────────────────────────────── */
+
+.age-note { font-size: .9rem; margin: 16px 0 0; max-width: 46ch; }
+.age-note a { color: var(--text); text-decoration-color: var(--accent); text-underline-offset: .2em; }
+.age-block { color: var(--text); border-left: 3px solid var(--accent); padding-left: 14px; }
+.notice { border: 1px solid var(--accent); padding: 16px 18px; margin: 8px 0 28px; max-width: 64ch; }
+.notice p { color: var(--text); margin: 0; }
