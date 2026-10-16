@@ -3,234 +3,117 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Beldangi Fax Machine LC — software studio in Vermont</title>
-<meta name="description" content="Beldangi Fax Machine LC is a one-person software studio in Vermont. We make Toad Stool Labs, and build mobile apps and websites for small businesses.">
-<meta name="theme-color" content="#e4e9e8">
+<title>Beldangi Fax Machine LC — we make Toad Stool Labs</title>
+<meta name="description" content="Beldangi Fax Machine LC is a small studio in Vermont making Toad Stool Labs, a mushroom lab game built in Godot.">
+<meta name="theme-color" content="#edf0ef">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:title" content="Beldangi Fax Machine LC">
-<meta property="og:description" content="Makers of Toad Stool Labs. A one-person software studio in Vermont building games, apps and websites.">
+<meta property="og:description" content="A small studio in Vermont making Toad Stool Labs, a mushroom lab game built in Godot.">
+<meta property="og:image" content="media/toadstool-shot.jpg">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<a class="skip" href="#game">Skip to the game</a>
 
-<a class="skip" href="#transmission">Skip to content</a>
+<header class="hero">
+  <div class="hero-copy">
+    <p class="kicker">Beldangi Fax Machine LC</p>
+    <h1>We build small worlds<br>and the machines<br>that run them.</h1>
+    <p class="lede">
+      A studio of one in Vermont. Right now everything goes into
+      <strong>Toad Stool Labs</strong>, a mushroom growing game made in Godot.
+    </p>
+    <p class="hero-actions">
+      <a class="btn" href="#game">See the game</a>
+      <a class="btn btn--quiet" href="mailto:beldangifaxmachine@gmail.com?subject=Project%20inquiry">Get in touch</a>
+    </p>
+  </div>
 
-<!-- ───────── page 1 : cover sheet ───────── -->
-<header class="sheet cover" id="top">
-  <div class="feed" aria-hidden="true"></div>
+  <div class="stage">
+    <canvas id="scene" aria-hidden="true"></canvas>
 
-  <p class="xmit" aria-hidden="true">
-    <span class="xmit-dot"></span>CONNECTED 33.6 kbps &nbsp;·&nbsp; SENDING 1 OF 5
-  </p>
+    <div class="stage-shell">
+      <p class="stage-hint" id="hint">Drag to turn the desk. Tap an object.</p>
 
-  <div class="cover-grid">
-    <div class="wordmark">
-      <span class="wordmark-sm">Beldangi</span>
-      <span class="wordmark-lg">Fax Machine</span>
-      <span class="wordmark-sm wordmark-sm--right">LC</span>
+      <div class="picker" role="group" aria-label="Objects on the desk">
+        <button type="button" class="pick is-on" data-item="fax" aria-pressed="true">Fax machine</button>
+        <button type="button" class="pick" data-item="dish" aria-pressed="false">Petri dish</button>
+        <button type="button" class="pick" data-item="rig" aria-pressed="false">Dev screen</button>
+      </div>
+
+      <div class="readouts" aria-live="polite">
+        <p class="readout is-on" data-item="fax">
+          <b>Fax machine.</b> The studio is named after one. Send it something and it prints.
+        </p>
+        <p class="readout" data-item="dish">
+          <b>Petri dish.</b> Tap it again and the mushroom fruits. Sixty real species are in the game.
+        </p>
+        <p class="readout" data-item="rig">
+          <b>Dev screen.</b> Where the game gets made. Godot, every day.
+        </p>
+      </div>
     </div>
 
-    <dl class="fields">
-      <div class="field">
-        <dt>From</dt>
-        <dd>Austin Pokhrel, Beldangi Fax Machine LC &mdash; Vermont, USA</dd>
-      </div>
-      <div class="field">
-        <dt>To</dt>
-        <dd>Anyone who needs software built and actually finished</dd>
-      </div>
-      <div class="field">
-        <dt>Re</dt>
-        <dd>Toad Stool Labs, our own game &mdash; plus apps and websites we build for other people</dd>
-      </div>
-      <div class="field field--split">
-        <div><dt>Pages</dt><dd>5</dd></div>
-        <div><dt>Urgent</dt><dd>Usually</dd></div>
-      </div>
-    </dl>
-
-    <p class="note">
-      A one-person studio. I write the code, draw the art, and answer the
-      email &mdash; so the person you talk to is the person building the thing.
-      Small jobs welcome.
-    </p>
-
-    <p class="actions">
-      <a class="btn" href="#game">Our game</a>
-      <a class="btn btn--quiet" href="#work">Client work</a>
-      <a class="btn btn--quiet" href="mailto:pokhrelaustin26@gmail.com?subject=Project%20inquiry">Hire us</a>
-    </p>
+    <img class="stage-fallback" src="media/toadstool-shot.jpg" width="1280" height="758"
+         alt="The lab interior in Toad Stool Labs, with petri dishes and growing equipment on a workbench." hidden>
   </div>
 </header>
 
-<main id="transmission">
-
-<!-- ───────── page 2 : the studio's own game ───────── -->
-<section class="sheet game" id="game">
-  <p class="margin-stamp" aria-hidden="true">PAGE 2 / 5 &nbsp; OUR OWN GAME</p>
-
-  <div class="game-grid">
-    <div class="game-text">
-      <p class="game-eyebrow">A Beldangi Fax Machine game, in development</p>
-      <h2 class="game-title">Toad Stool Labs</h2>
-      <p class="game-lede">
-        Grow real mushrooms in a lab that is actively trying to ruin them. Pour agar,
-        print spore prints, keep the air clean, and watch a contamination bloom eat a
-        week of work in an afternoon.
-      </p>
-      <p class="game-body">
-        Every species in the game is a real one, with its own body, growth habit and
-        substrate &mdash; sixty of them and counting. Built in Godot: the lab, the
-        tooling, the shaders and the frog who works there are all made in house.
-      </p>
-      <dl class="fields fields--game">
-        <div class="field">
-          <dt>Platform</dt><dd>PC, on Steam</dd>
-        </div>
-        <div class="field">
-          <dt>Status</dt><dd>Demo dropping soon</dd>
-        </div>
-        <div class="field">
-          <dt>Studio name</dt><dd>Toad Stool Labs, the games arm of Beldangi Fax Machine LC</dd>
-        </div>
-      </dl>
-      <p class="actions">
-        <a class="btn" href="https://bahun-ko-ckusi.github.io/TOADSTOOLLINK/">Visit the game site</a>
-        <a class="btn btn--quiet" href="https://linktr.ee/BeldangiFaxMachine">Follow development</a>
-      </p>
-    </div>
-
-    <figure class="game-art">
-      <img class="game-shot" src="media/toadstool-shot.jpg" width="1280" height="758"
-           alt="A screenshot of the Toad Stool Labs lab interior, with petri dishes and growing equipment on a workbench." loading="lazy" decoding="async">
-      <img class="game-char" src="media/toadstool-character.png" width="1312" height="1199"
-           alt="The frog character the player plays as in Toad Stool Labs." loading="lazy" decoding="async">
-      <figcaption>The lab, mid-run. The frog is you.</figcaption>
-    </figure>
+<main>
+<section class="game" id="game">
+  <div class="game-copy">
+    <p class="kicker">Our game &mdash; in development</p>
+    <h2>Toad Stool Labs</h2>
+    <p class="lede">
+      Grow real mushrooms in a lab that is quietly trying to ruin them. Pour agar,
+      take spore prints, keep the air clean, and watch one bad week of contamination
+      eat the whole shelf.
+    </p>
+    <p>
+      Every species is a real one, with its own body, growth habit and substrate.
+      The lab, the tools, the shaders and the frog who works there are all made here.
+    </p>
+    <ul class="facts">
+      <li><span>Platform</span> PC, on Steam</li>
+      <li><span>Engine</span> Godot</li>
+      <li><span>Status</span> Demo dropping soon</li>
+    </ul>
+    <p class="hero-actions">
+      <a class="btn" href="https://bahun-ko-ckusi.github.io/TOADSTOOLLINK/">Visit the game site</a>
+    </p>
   </div>
+
+  <figure class="game-art">
+    <img class="shot" src="media/toadstool-shot.jpg" width="1280" height="758"
+         alt="A workbench in the game lab, lined with petri dishes under lab lighting." loading="lazy" decoding="async">
+    <img class="frog" src="media/toadstool-character.png" width="1312" height="1199"
+         alt="The frog character the player controls." loading="lazy" decoding="async">
+  </figure>
 </section>
 
-<!-- ───────── page 2 : work ───────── -->
-<section class="sheet" id="work">
-  <p class="margin-stamp" aria-hidden="true">PAGE 3 / 5 &nbsp; CLIENT WORK</p>
-
-  <h2 class="head">Work we've shipped for other people</h2>
-
-  <ol class="ledger">
-    <li class="row">
-      <h3 class="row-name">Eatinn</h3>
-      <p class="row-kind">App &middot; iOS and Android</p>
-      <p class="row-what">Food ordering for people who'd rather not call. Shipped to both
-      app stores, including the account setup, the review process, and the paperwork nobody
-      warns you about.</p>
-    </li>
-    <li class="row">
-      <h3 class="row-name">Namaste Nirvana Massage</h3>
-      <p class="row-kind">Website &middot; booking</p>
-      <p class="row-what">Service menu, online booking, and a database behind it, so the
-      owner stops scheduling appointments over text message.</p>
-    </li>
-    <li class="row">
-      <h3 class="row-name">Dahal Brothers Mechanical</h3>
-      <p class="row-kind">Website &middot; local trade</p>
-      <p class="row-what">A plain, fast site that tells people what the shop does and how
-      to call it. Loads on a phone in a parking lot.</p>
-    </li>
-    <li class="row">
-      <h3 class="row-name">Aqube Barbershop &middot; Threading Beauty Studio</h3>
-      <p class="row-kind">Websites &middot; appointments</p>
-      <p class="row-what">Two neighbourhood shops, two one-page sites: hours, prices,
-      directions, and a button that books.</p>
-    </li>
-  </ol>
-</section>
-
-<!-- ───────── page 3 : services ───────── -->
-<section class="sheet sheet--ink" id="services">
-  <p class="margin-stamp" aria-hidden="true">PAGE 4 / 5 &nbsp; WHAT YOU CAN HIRE US FOR</p>
-
-  <h2 class="head">What you can hire us for</h2>
-
-  <div class="services">
-    <div class="svc">
-      <h3>A website for your business</h3>
-      <p>One to five pages, your own domain, hours and prices and a way to book or call.
-      Hosted somewhere cheap and boring so there's no monthly surprise.</p>
-      <p class="svc-when">Usually one to two weeks.</p>
-    </div>
-    <div class="svc">
-      <h3>An app for your phone</h3>
-      <p>iOS and Android, from the first sketch to a live listing in both stores &mdash;
-      developer accounts, screenshots, privacy forms and all.</p>
-      <p class="svc-when">Usually one to three months.</p>
-    </div>
-    <div class="svc">
-      <h3>A game, or a piece of one</h3>
-      <p>Godot work: 3D systems, tools, shaders, and gameplay that has to feel right.
-      Including the unglamorous parts, like making it run on an old laptop.</p>
-      <p class="svc-when">Scoped per project.</p>
-    </div>
-    <div class="svc">
-      <h3>Fixing what you already have</h3>
-      <p>A site that nobody can edit, an app stuck in review, a page that takes nine
-      seconds to load. Bring it over.</p>
-      <p class="svc-when">Often a single afternoon.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ───────── page 4 : contact ───────── -->
-<section class="sheet contact" id="contact">
-  <p class="margin-stamp" aria-hidden="true">PAGE 5 / 5 &nbsp; REPLY TO SENDER</p>
-
-  <h2 class="head">Send one back</h2>
-
-  <p class="contact-lede">
-    Tell me what you're trying to build, roughly what you can spend, and when you need
-    it. If it isn't a fit I'll say so in the first reply instead of the fifth.
+<section class="hire">
+  <h2>Work with us</h2>
+  <p class="lede">
+    Between game builds we take on small software jobs &mdash; a game system in Godot,
+    a phone app shipped to both stores, or a website that loads fast and stays cheap.
   </p>
-
-  <dl class="fields fields--reply">
-    <div class="field">
-      <dt>Email</dt>
-      <dd><a href="mailto:pokhrelaustin26@gmail.com?subject=Project%20inquiry">pokhrelaustin26@gmail.com</a></dd>
-    </div>
-    <div class="field">
-      <dt>Code</dt>
-      <dd><a href="https://github.com/Bahun-Ko-Ckusi">github.com/Bahun-Ko-Ckusi</a></dd>
-    </div>
-    <div class="field">
-      <dt>Elsewhere</dt>
-      <dd><a href="https://linktr.ee/BeldangiFaxMachine">linktr.ee/BeldangiFaxMachine</a></dd>
-    </div>
-  </dl>
+  <p class="mail">
+    <a href="mailto:beldangifaxmachine@gmail.com?subject=Project%20inquiry">beldangifaxmachine@gmail.com</a>
+  </p>
+  <p class="fineprint">Tell me what you want built, roughly what you can spend, and when you need it.</p>
 </section>
-
 </main>
 
-<footer class="sheet foot">
-  <p class="foot-line">
-    Beldangi Fax Machine LC &middot; a Vermont limited liability company
-  </p>
-  <p class="xmit xmit--end" aria-hidden="true">
-    TRANSMISSION COMPLETE &nbsp;·&nbsp; 5 PAGES SENT &nbsp;·&nbsp; NO ERRORS
-  </p>
+<footer>
+  <p>&copy; <span id="year">2026</span> Beldangi Fax Machine LC. All rights reserved.</p>
+  <p class="fineprint">A Vermont limited liability company.</p>
 </footer>
 
-<script>
-  // One orchestrated moment: the cover sheet prints line by line, once, on load.
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.documentElement.classList.add('printing');
-    addEventListener('load', function () {
-      requestAnimationFrame(function () {
-        document.documentElement.classList.add('printed');
-      });
-    });
-  }
-</script>
+<script type="module" src="scene.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
