@@ -140,8 +140,8 @@ owing you anything for them.</p>
 IP = ("ip", "Our property", """
 <p>The game, its name, code, art, models, audio, text and our websites belong to Beldangi Fax
 Machine LC or our licensors and are protected by copyright and other laws. All rights not
-expressly given to you are kept by us. Toadstool is built with the Godot Engine, which is used
-under its own open-source licence.</p>
+expressly given to you are kept by us. Toadstool is built with the Godot Engine and uses other
+third-party tools and assets, each used under its own licence.</p>
 """)
 
 COPYRIGHT = ("copyright", "Copyright complaints", f"""

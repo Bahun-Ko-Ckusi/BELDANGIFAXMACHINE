@@ -64,7 +64,7 @@ Please buy the game for what it is today, not for what we hope to add.
 
 9. OUR PROPERTY
 
-The game, its name, code, art, models, audio, text and our websites belong to Beldangi Fax Machine LC or our licensors and are protected by copyright and other laws. All rights not expressly given to you are kept by us. Toadstool is built with the Godot Engine, which is used under its own open-source licence.
+The game, its name, code, art, models, audio, text and our websites belong to Beldangi Fax Machine LC or our licensors and are protected by copyright and other laws. All rights not expressly given to you are kept by us. Toadstool is built with the Godot Engine and uses other third-party tools and assets, each used under its own licence.
 
 10. NO WARRANTY
 
