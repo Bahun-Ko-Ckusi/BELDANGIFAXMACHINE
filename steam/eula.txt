@@ -1,0 +1,99 @@
+END USER LICENSE AGREEMENT - TOADSTOOL
+Last updated November 20, 2026
+
+This End User License Agreement (“EULA”) is between you and Beldangi Fax Machine LC, a Vermont limited liability company (“we”, “us”), and covers the video game Toadstool, also shown in the game as “Toadstool Labs” (the “game”). It is part of our Terms of Service (https://beldangifaxmachine.com/terms.html). By installing or playing the game you agree to this EULA. If you don’t agree, don’t install or play the game.
+
+Adults only (18+). Toadstool depicts the growing and use of psilocybin mushrooms and other drugs, and some scenes have intense flashing colours and heavy visual distortion. It is a work of fiction. Never eat a wild mushroom because of anything you saw in the game.
+
+1. YOU MUST BE 18 OR OLDER
+
+Toadstool is made for adults aged 18 and over. You may only buy, download or play it if you are at least 18 and old enough to enter into a binding agreement where you live. If you are under 18, do not buy, download or play the game.
+
+2. DRUG CONTENT IS FICTION, NOT ADVICE
+
+Toadstool is a psychology and mycology simulation. It depicts the growing and use of psilocybin (“magic”) mushrooms and other drugs.
+
+Psilocybin is a Schedule I controlled substance under United States federal law and is illegal in many other countries. The game does not encourage, promote or condone illegal activity. Nothing in it is a real guide, recipe or set of instructions, and nothing in it is medical, legal or scientific advice. Know and follow the laws where you live.
+
+3. DO NOT USE THE GAME TO IDENTIFY REAL MUSHROOMS
+
+Mushrooms in the game are not accurate enough to identify real ones. Many wild mushrooms are poisonous, and some deadly species look very similar to edible or psilocybin species. Never pick, eat or give anyone a wild mushroom because of anything you saw in the game. If someone may have eaten a poisonous mushroom, get medical help immediately (in the US, call Poison Control at 1-800-222-1222 or 911).
+
+4. PHOTOSENSITIVITY AND HEALTH WARNINGS
+
+Photosensitive seizures. Some scenes have intense flashing colours, glitches and heavy visual distortion. A small number of people may have seizures when exposed to certain lights or patterns, even with no history of epilepsy. If you or anyone in your family has had a seizure or epilepsy, talk to a doctor before playing. Stop playing immediately and see a doctor if you have dizziness, altered vision, eye or muscle twitching, loss of awareness, disorientation, or any involuntary movement.
+
+Motion sickness and discomfort. The game includes swaying, distorted and moving visuals. If you feel sick, dizzy or uncomfortable, stop and rest.
+
+Disturbing themes. The game deals with altered states of mind and psychological themes that some players may find upsetting. Take breaks, and stop playing if it affects you.
+
+5. YOUR LICENCE TO PLAY
+
+When you buy Toadstool you get a licence to play it, not ownership of it. We give you a personal, non-exclusive, non-transferable, revocable licence to install and play the game for your own non-commercial entertainment, under these terms and the terms of the store you bought it from.
+
+You may not:
+
+- copy, sell, rent, sublicense or redistribute the game or any part of it;
+- extract, reuse or redistribute the game’s code, art, models, audio or other assets, including in other games or products;
+- reverse engineer, decompile or disassemble the game, except where the law allows it;
+- cheat, hack or interfere with online play, our servers or other players’ games;
+- remove or change any copyright, trademark, age or content notice in the game;
+- let anyone under 18 play the game, or use the game for anything unlawful.
+
+Mods you make for your own single-player use are fine. Please don’t distribute mods that include our code or assets.
+
+6. ONLINE PLAY AND CONDUCT
+
+Toadstool has online features. When Steam is running you can play with your Steam friends in a friends-only lobby. Other players in your session can see your frog’s name and look, where your frog is and what it does. Our Privacy Policy (https://beldangifaxmachine.com/privacy.html) explains what is sent and stored.
+
+Don’t use a frog name, bug note or anything else you put in the game that is hateful, harassing, threatening, sexual, or that shares anyone’s personal information. We may remove anything like that, and we may block anyone who abuses online play. Online features may change, be limited or be turned off at any time, especially during early access.
+
+7. BUYING THROUGH STEAM, AND REFUNDS
+
+Toadstool is sold through Steam, operated by Valve Corporation. Your purchase, payment, account and download are handled by Steam and covered by the Steam Subscriber Agreement and Steam’s refund policy. Refund requests go through Steam. We never receive or store your payment details. Valve is not responsible for the game or for these terms.
+
+8. EARLY ACCESS
+
+Early access means the game is unfinished. You should expect bugs, missing features and changes. During early access:
+
+- features, content, balance and price may change, be added or be removed;
+- updates may reset or break saved games;
+- planned features, including the full storyline, are our current plan and not a promise. Timelines can move.
+
+Please buy the game for what it is today, not for what we hope to add.
+
+9. OUR PROPERTY
+
+The game, its name, code, art, models, audio, text and our websites belong to Beldangi Fax Machine LC or our licensors and are protected by copyright and other laws. All rights not expressly given to you are kept by us. Toadstool is built with the Godot Engine, which is used under its own open-source licence.
+
+10. NO WARRANTY
+
+The game and our websites are provided “as is” and “as available”. To the fullest extent the law allows, we make no warranties of any kind, express or implied, including warranties of merchantability, fitness for a particular purpose and non-infringement, or that the game will be error-free or uninterrupted.
+
+11. LIMIT OF LIABILITY
+
+To the fullest extent the law allows, we are not liable for any indirect, incidental, special, punitive or consequential damages, or for lost data, saves or profits, arising from the game or our websites. Our total liability to you for any claim is limited to the amount you paid for the game. Some places don’t allow some of these limits, so they may not all apply to you.
+
+12. ENDING YOUR LICENCE
+
+You can stop using the game at any time by uninstalling it. If you break these terms, your licence ends and you must stop playing and delete the game. Sections that by their nature should last after the licence ends, such as ownership, no warranty, limit of liability and governing law, keep applying.
+
+13. GOVERNING LAW
+
+These terms are governed by the laws of the State of Vermont, USA, without regard to its conflict-of-law rules. Any dispute that is not handled by Steam will be heard in the state or federal courts located in Vermont, unless the consumer laws of the country where you live give you the right to bring it where you live. Nothing here takes away rights you have under those consumer laws.
+
+14. GENERAL
+
+- Whole agreement. These terms, our Privacy Policy and the terms of the store you bought from are the whole agreement between you and us about the game.
+- Severability. If any part of these terms can’t be enforced, the rest still applies, and that part is applied as far as the law allows.
+- No waiver. If we don’t enforce a part of these terms right away, we can still enforce it later.
+- Transfer. You can’t transfer your rights under these terms. We may transfer ours, for example if the game or the company is sold.
+- Export and sanctions. You may not download or use the game where United States export or sanctions laws forbid it.
+
+15. CHANGES TO THESE TERMS
+
+We may update these terms, for example when the game leaves early access. The latest version is always on this page, with the date it last changed at the top. If you keep playing after an update, the new terms apply.
+
+16. CONTACT
+
+Beldangi Fax Machine LC, Vermont, USA. Questions about these terms: beldangifaxmachine@gmail.com
